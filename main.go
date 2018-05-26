@@ -6,14 +6,32 @@ import (
 )
 
 func main() {
-	var fe FiniteElement
-	fe.Init(1, -3, 2, 5)
 
-	sol := fe.Solve()
-	esol := esol(5)
 
-	for i, x := range sol {
-		fmt.Printf("%7.4f %7.4f\n", x, esol[i])
+	for elements:= 1; elements<5000; elements+=1000 {
+
+		var (
+			fe FiniteElement
+			//elements int = 15
+		)
+
+		fe.Init(1, -3, 2, elements)
+		esol := esol(elements)
+		sol := fe.Solve()
+
+		//fmt.Println(sol)
+		//fmt.Println(esol)
+
+		var totalError float64
+		for i, x := range sol {
+			err := x - esol[i]
+			totalError += err * err
+			//fmt.Printf("%7.4f %7.4f\n", x, esol[i])
+		}
+
+		totalError = math.Sqrt(totalError / float64(elements+1))
+
+		fmt.Println(totalError)
 	}
 }
 

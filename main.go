@@ -60,10 +60,16 @@ func main() {
 	//for i := 0; i < 2; i++ {
 	//elements, nodes, boundaryNodeIndexes = split(elements, nodes, boundaryNodeIndexes)
 
-	elements, nodes, boundaryNodeIndexes = split(elements, nodes, boundaryNodeIndexes)
-	fmt.Println(len(boundaryNodeIndexes))
+	//elements, nodes, boundaryNodeIndexes = split(elements, nodes, boundaryNodeIndexes)
+	//fmt.Println(len(boundaryNodeIndexes), boundaryNodeIndexes)
 	elements, nodes, boundaryNodeIndexes = split2(elements, nodes, boundaryNodeIndexes)
-	fmt.Println(len(boundaryNodeIndexes))
+	fmt.Println(len(boundaryNodeIndexes), boundaryNodeIndexes)
+	elements, nodes, boundaryNodeIndexes = split2(elements, nodes, boundaryNodeIndexes)
+	fmt.Println(len(boundaryNodeIndexes), boundaryNodeIndexes)
+	//elements, nodes, boundaryNodeIndexes = split2(elements, nodes, boundaryNodeIndexes)
+	//fmt.Println(len(boundaryNodeIndexes))
+	//elements, nodes, boundaryNodeIndexes = split2(elements, nodes, boundaryNodeIndexes)
+	//fmt.Println(len(boundaryNodeIndexes))
 	//elements, nodes, boundaryNodeIndexes = split(elements, nodes, boundaryNodeIndexes)
 	//fmt.Println(len(boundaryNodeIndexes))
 	//elements, nodes, boundaryNodeIndexes = split(elements, nodes, boundaryNodeIndexes)
@@ -275,7 +281,16 @@ func split2(elements []Element, nodes []Node, boundaryNodeIndexes []int) ([]Elem
 		)
 
 		if extraCount == 3 {
-			boundaryNodeIndexes = append(boundaryNodeIndexes, N5, N6, N9)
+			if !inArr(boundaryNodeIndexes, N5) {
+				boundaryNodeIndexes = append(boundaryNodeIndexes, N5)
+			}
+			if !inArr(boundaryNodeIndexes, N6) {
+				boundaryNodeIndexes = append(boundaryNodeIndexes, N6)
+			}
+			if !inArr(boundaryNodeIndexes, N9) {
+				boundaryNodeIndexes = append(boundaryNodeIndexes, N9)
+			}
+			//boundaryNodeIndexes = append(boundaryNodeIndexes, N5, N6, N9)
 		}
 	}
 
@@ -382,6 +397,12 @@ func midNode(nodes *[]Node, midNodes ...int) int {
 	node.X /= float64(len(midNodes))
 	node.Y /= float64(len(midNodes))
 	node.Z /= float64(len(midNodes))
+
+	for i := len(*nodes) - 1; i >= 0; i-- {
+		if (*nodes)[i] == node {
+			return i
+		}
+	}
 
 	*nodes = append(*nodes, node)
 
